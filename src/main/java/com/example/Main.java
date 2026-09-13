@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 /**
  * 程序入口：论文查重
@@ -15,10 +16,12 @@ import java.nio.file.Paths;
  */
 public class Main {
 
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         // 参数校验
         if (args.length != 3) {
-            System.err.println("用法: java -jar main.jar <原文文件> <抄袭版论文> <答案文件>");
+            LOGGER.severe("用法: java -jar main.jar <原文文件> <抄袭版论文> <答案文件>");
             System.exit(1);
         }
 
@@ -40,13 +43,13 @@ public class Main {
             // 写入答案文件
             writeFile(answerPath, result);
 
-            System.out.println("重复率: " + result);
+            LOGGER.info(() -> "重复率: " + result);
 
         } catch (IOException e) {
-            System.err.println("文件读写错误: " + e.getMessage());
+            LOGGER.severe("文件读写错误: " + e.getMessage());
             System.exit(2);
         } catch (Exception e) {
-            System.err.println("程序异常: " + e.getMessage());
+            LOGGER.severe("程序异常: " + e.getMessage());
             System.exit(3);
         }
     }

@@ -9,6 +9,10 @@ import java.util.Map;
  */
 public class SimilarityCalculator {
 
+    private SimilarityCalculator() {
+        // 工具类，禁止实例化
+    }
+
     /**
      * 计算两段文本的余弦相似度
      *

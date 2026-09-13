@@ -9,6 +9,10 @@ import java.util.List;
  * - 分词（中文按字 + bigram，英文按单词）
  */
 public class TextProcessor {
+    
+    private TextProcessor() {
+       // 工具类，禁止实例化
+    }
 
     /**
      * 预处理文本，返回分词后的 token 列表

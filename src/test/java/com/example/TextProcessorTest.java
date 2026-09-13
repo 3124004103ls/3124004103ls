@@ -1,6 +1,9 @@
 package com.example;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -9,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * TextProcessor 单元测试
  */
-public class TextProcessorTest {
+class TextProcessorTest {
 
     /**
      * 测试1：正常中文句子分词，应该包含 unigram 和 bigram
      */
     @Test
-    public void testTokenizeNormalChinese() {
+    void testTokenizeNormalChinese() {
         List<String> tokens = TextProcessor.tokenize("今天是星期天");
         assertNotNull(tokens);
         assertFalse(tokens.isEmpty());
@@ -25,40 +28,22 @@ public class TextProcessorTest {
     }
 
     /**
-     * 测试2：空字符串应返回空列表
+     * 测试2：空输入、null、只有标点的输入，都应返回空列表
      */
-    @Test
-    public void testTokenizeEmptyString() {
-        List<String> tokens = TextProcessor.tokenize("");
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {"", "，。！？、；："})
+    void testTokenizeEmptyCases(String input) {
+        List<String> tokens = TextProcessor.tokenize(input);
         assertNotNull(tokens);
         assertTrue(tokens.isEmpty());
     }
 
     /**
-     * 测试3：null 应返回空列表
+     * 测试3：英文大小写应被统一为小写
      */
     @Test
-    public void testTokenizeNull() {
-        List<String> tokens = TextProcessor.tokenize(null);
-        assertNotNull(tokens);
-        assertTrue(tokens.isEmpty());
-    }
-
-    /**
-     * 测试4：只有标点符号，应返回空列表
-     */
-    @Test
-    public void testTokenizeOnlyPunctuation() {
-        List<String> tokens = TextProcessor.tokenize("，。！？、；：");
-        assertNotNull(tokens);
-        assertTrue(tokens.isEmpty());
-    }
-
-    /**
-     * 测试5：英文大小写应被统一为小写
-     */
-    @Test
-    public void testTokenizeEnglishLowerCase() {
+    void testTokenizeEnglishLowerCase() {
         List<String> tokens = TextProcessor.tokenize("Hello World");
         assertTrue(tokens.contains("h"));
         assertTrue(tokens.contains("e"));
@@ -66,10 +51,10 @@ public class TextProcessorTest {
     }
 
     /**
-     * 测试6：中英文混合
+     * 测试4：中英文混合
      */
     @Test
-    public void testTokenizeMixed() {
+    void testTokenizeMixed() {
         List<String> tokens = TextProcessor.tokenize("abc中文123");
         assertTrue(tokens.contains("a"));
         assertTrue(tokens.contains("中"));

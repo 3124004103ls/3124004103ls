@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * SimilarityCalculator 单元测试
  */
-public class SimilarityCalculatorTest {
+class SimilarityCalculatorTest {
 
     /**
      * 测试1：完全相同的文本，相似度应为 1.00
      */
     @Test
-    public void testIdenticalText() {
+    void testIdenticalText() {
         double sim = SimilarityCalculator.calculate("今天是星期天", "今天是星期天");
         assertEquals(1.0, sim, 0.01);
     }
@@ -22,7 +22,7 @@ public class SimilarityCalculatorTest {
      * 测试2：完全不同的文本，相似度应接近 0
      */
     @Test
-    public void testCompletelyDifferent() {
+    void testCompletelyDifferent() {
         double sim = SimilarityCalculator.calculate("abcde", "12345");
         assertTrue(sim < 0.3);
     }
@@ -31,7 +31,7 @@ public class SimilarityCalculatorTest {
      * 测试3：高度相似的文本（只改了几个字）
      */
     @Test
-    public void testHighlySimilar() {
+    void testHighlySimilar() {
         double sim = SimilarityCalculator.calculate(
                 "今天是星期天，天气晴，今天晚上我要去看电影。",
                 "今天是周天，天气晴朗，我晚上要去看电影。"
@@ -43,7 +43,7 @@ public class SimilarityCalculatorTest {
      * 测试4：两段都为空，应返回 1.0
      */
     @Test
-    public void testBothEmpty() {
+    void testBothEmpty() {
         double sim = SimilarityCalculator.calculate("", "");
         assertEquals(1.0, sim, 0.01);
     }
@@ -52,7 +52,7 @@ public class SimilarityCalculatorTest {
      * 测试5：一段为空，一段非空，应返回 0.0
      */
     @Test
-    public void testOneEmpty() {
+    void testOneEmpty() {
         double sim = SimilarityCalculator.calculate("今天是星期天", "");
         assertEquals(0.0, sim, 0.01);
     }
@@ -61,7 +61,7 @@ public class SimilarityCalculatorTest {
      * 测试6：null 输入，不应抛异常
      */
     @Test
-    public void testNullInput() {
+    void testNullInput() {
         double sim1 = SimilarityCalculator.calculate(null, "abc");
         double sim2 = SimilarityCalculator.calculate("abc", null);
         double sim3 = SimilarityCalculator.calculate(null, null);
@@ -74,7 +74,7 @@ public class SimilarityCalculatorTest {
      * 测试7：相似度结果应在 [0, 1] 范围内
      */
     @Test
-    public void testRange() {
+    void testRange() {
         double sim = SimilarityCalculator.calculate("abcdefg", "abcxyz");
         assertTrue(sim >= 0.0 && sim <= 1.0);
     }
@@ -83,7 +83,7 @@ public class SimilarityCalculatorTest {
      * 测试8：忽略标点和空白
      */
     @Test
-    public void testIgnorePunctuation() {
+    void testIgnorePunctuation() {
         double sim = SimilarityCalculator.calculate(
                 "今天，是星期天！",
                 "今天是星期天。"
@@ -95,7 +95,7 @@ public class SimilarityCalculatorTest {
      * 测试9：英文大小写不影响相似度
      */
     @Test
-    public void testIgnoreCase() {
+    void testIgnoreCase() {
         double sim = SimilarityCalculator.calculate("Hello World", "hello world");
         assertEquals(1.0, sim, 0.01);
     }
@@ -104,7 +104,7 @@ public class SimilarityCalculatorTest {
      * 测试10：长文本相似度计算
      */
     @Test
-    public void testLongText() {
+    void testLongText() {
         String s1 = "今天是星期天，天气晴，今天晚上我要去看电影。";
         String s2 = "今天是星期天，天气晴，今天晚上我要去看电影。";
         double sim = SimilarityCalculator.calculate(s1, s2);
