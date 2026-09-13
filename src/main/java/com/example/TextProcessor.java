@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ÎÄ±¾Ô¤´¦Àí¹¤¾ßÀà£º
- * - È¥³ı±êµã¡¢¿Õ°×
- * - ·Ö´Ê£¨ÖĞÎÄ°´×Ö + bigram£¬Ó¢ÎÄ°´µ¥´Ê£©
+ * æ–‡æœ¬é¢„å¤„ç†å·¥å…·ç±»ï¼š
+ * - å»é™¤æ ‡ç‚¹ã€ç©ºç™½
+ * - åˆ†è¯ï¼ˆä¸­æ–‡æŒ‰å­— + bigramï¼Œè‹±æ–‡æŒ‰å•è¯ï¼‰
  */
 public class TextProcessor {
 
     /**
-     * Ô¤´¦ÀíÎÄ±¾£¬·µ»Ø·Ö´ÊºóµÄ token ÁĞ±í
+     * é¢„å¤„ç†æ–‡æœ¬ï¼Œè¿”å›åˆ†è¯åçš„ token åˆ—è¡¨
      */
     public static List<String> tokenize(String text) {
         List<String> tokens = new ArrayList<>();
@@ -19,7 +19,7 @@ public class TextProcessor {
             return tokens;
         }
 
-        // 1. ×ªĞ¡Ğ´£¬È¥³ı±êµãÓë¿Õ°×
+        // 1. è½¬å°å†™ï¼Œå»é™¤æ ‡ç‚¹ä¸ç©ºç™½
         StringBuilder cleaned = new StringBuilder();
         for (char c : text.toCharArray()) {
             if (Character.isLetterOrDigit(c)) {
@@ -32,7 +32,7 @@ public class TextProcessor {
             return tokens;
         }
 
-        // 2. °´×Ö·ûÇĞ·Ö£¬ÔÙÉú³É bigram
+        // 2. æŒ‰å­—ç¬¦åˆ‡åˆ†ï¼Œå†ç”Ÿæˆ bigram
         List<String> chars = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
             chars.add(String.valueOf(s.charAt(i)));

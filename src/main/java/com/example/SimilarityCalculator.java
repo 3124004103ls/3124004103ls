@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ÓàÏÒÏàËÆ¶È¼ÆËãÆ÷
+ * ä½™å¼¦ç›¸ä¼¼åº¦è®¡ç®—å™¨
  */
 public class SimilarityCalculator {
 
     /**
-     * ¼ÆËãÁ½¶ÎÎÄ±¾µÄÓàÏÒÏàËÆ¶È
+     * è®¡ç®—ä¸¤æ®µæ–‡æœ¬çš„ä½™å¼¦ç›¸ä¼¼åº¦
      *
-     * @param text1 Ô­ÎÄ
-     * @param text2 ³­Ï®°æ
-     * @return ÏàËÆ¶È [0.0, 1.0]
+     * @param text1 åŸæ–‡
+     * @param text2 æŠ„è¢­ç‰ˆ
+     * @return ç›¸ä¼¼åº¦ [0.0, 1.0]
      */
     public static double calculate(String text1, String text2) {
         List<String> tokens1 = TextProcessor.tokenize(text1);
         List<String> tokens2 = TextProcessor.tokenize(text2);
 
-        // ¿ÕÎÄ±¾´¦Àí
+        // ç©ºæ–‡æœ¬å¤„ç†
         if (tokens1.isEmpty() && tokens2.isEmpty()) {
             return 1.0;
         }
@@ -28,11 +28,11 @@ public class SimilarityCalculator {
             return 0.0;
         }
 
-        // ¹¹½¨´ÊÆµÏòÁ¿
+        // æ„å»ºè¯é¢‘å‘é‡
         Map<String, Integer> freq1 = buildFrequency(tokens1);
         Map<String, Integer> freq2 = buildFrequency(tokens2);
 
-        // ¼ÆËãµã»ı
+        // è®¡ç®—ç‚¹ç§¯
         double dotProduct = 0.0;
         for (Map.Entry<String, Integer> entry : freq1.entrySet()) {
             Integer v2 = freq2.get(entry.getKey());
@@ -41,7 +41,7 @@ public class SimilarityCalculator {
             }
         }
 
-        // ¼ÆËãÄ£³¤
+        // è®¡ç®—æ¨¡é•¿
         double norm1 = 0.0;
         for (int v : freq1.values()) {
             norm1 += v * v;
@@ -58,10 +58,10 @@ public class SimilarityCalculator {
             return 0.0;
         }
 
-        // ÓàÏÒÏàËÆ¶È
+        // ä½™å¼¦ç›¸ä¼¼åº¦
         double similarity = dotProduct / (norm1 * norm2);
 
-        // ÏŞÖÆÔÚ [0, 1]
+        // é™åˆ¶åœ¨ [0, 1]
         if (similarity < 0.0) similarity = 0.0;
         if (similarity > 1.0) similarity = 1.0;
 
@@ -69,7 +69,7 @@ public class SimilarityCalculator {
     }
 
     /**
-     * Í³¼Æ´ÊÆµ
+     * ç»Ÿè®¡è¯é¢‘
      */
     private static Map<String, Integer> buildFrequency(List<String> tokens) {
         Map<String, Integer> freq = new HashMap<>();

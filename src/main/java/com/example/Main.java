@@ -7,18 +7,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * ³ÌĞòÈë¿Ú£ºÂÛÎÄ²éÖØ
- * ÃüÁîĞĞ²ÎÊı£º
- *   args[0] Ô­ÎÄÎÄ¼ş¾ø¶ÔÂ·¾¶
- *   args[1] ³­Ï®°æÂÛÎÄÎÄ¼ş¾ø¶ÔÂ·¾¶
- *   args[2] ´ğ°¸Êä³öÎÄ¼ş¾ø¶ÔÂ·¾¶
+ * ç¨‹åºå…¥å£ï¼šè®ºæ–‡æŸ¥é‡
+ * å‘½ä»¤è¡Œå‚æ•°ï¼š
+ *   args[0] åŸæ–‡æ–‡ä»¶ç»å¯¹è·¯å¾„
+ *   args[1] æŠ„è¢­ç‰ˆè®ºæ–‡æ–‡ä»¶ç»å¯¹è·¯å¾„
+ *   args[2] ç­”æ¡ˆè¾“å‡ºæ–‡ä»¶ç»å¯¹è·¯å¾„
  */
 public class Main {
 
     public static void main(String[] args) {
-        // ²ÎÊıĞ£Ñé
+        // å‚æ•°æ ¡éªŒ
         if (args.length != 3) {
-            System.err.println("ÓÃ·¨: java -jar main.jar <Ô­ÎÄÎÄ¼ş> <³­Ï®°æÂÛÎÄ> <´ğ°¸ÎÄ¼ş>");
+            System.err.println("ç”¨æ³•: java -jar main.jar <åŸæ–‡æ–‡ä»¶> <æŠ„è¢­ç‰ˆè®ºæ–‡> <ç­”æ¡ˆæ–‡ä»¶>");
             System.exit(1);
         }
 
@@ -27,46 +27,46 @@ public class Main {
         String answerPath = args[2];
 
         try {
-            // ¶ÁÈ¡ÎÄ¼ş
+            // è¯»å–æ–‡ä»¶
             String origText = readFile(origPath);
             String copyText = readFile(copyPath);
 
-            // ¼ÆËãÏàËÆ¶È
+            // è®¡ç®—ç›¸ä¼¼åº¦
             double similarity = SimilarityCalculator.calculate(origText, copyText);
 
-            // ¸ñÊ½»¯Êä³ö£º±£ÁôÁ½Î»Ğ¡Êı
+            // æ ¼å¼åŒ–è¾“å‡ºï¼šä¿ç•™ä¸¤ä½å°æ•°
             String result = String.format("%.2f", similarity);
 
-            // Ğ´Èë´ğ°¸ÎÄ¼ş
+            // å†™å…¥ç­”æ¡ˆæ–‡ä»¶
             writeFile(answerPath, result);
 
-            System.out.println("ÖØ¸´ÂÊ: " + result);
+            System.out.println("é‡å¤ç‡: " + result);
 
         } catch (IOException e) {
-            System.err.println("ÎÄ¼ş¶ÁĞ´´íÎó: " + e.getMessage());
+            System.err.println("æ–‡ä»¶è¯»å†™é”™è¯¯: " + e.getMessage());
             System.exit(2);
         } catch (Exception e) {
-            System.err.println("³ÌĞòÒì³£: " + e.getMessage());
+            System.err.println("ç¨‹åºå¼‚å¸¸: " + e.getMessage());
             System.exit(3);
         }
     }
 
     /**
-     * ¶ÁÈ¡ÎÄ¼şÄÚÈİ£¨UTF-8£©
+     * è¯»å–æ–‡ä»¶å†…å®¹ï¼ˆUTF-8ï¼‰
      */
     static String readFile(String path) throws IOException {
         Path p = Paths.get(path);
         if (!Files.exists(p)) {
-            throw new IOException("ÎÄ¼ş²»´æÔÚ: " + path);
+            throw new IOException("æ–‡ä»¶ä¸å­˜åœ¨: " + path);
         }
         if (!Files.isReadable(p)) {
-            throw new IOException("ÎÄ¼ş²»¿É¶Á: " + path);
+            throw new IOException("æ–‡ä»¶ä¸å¯è¯»: " + path);
         }
         return new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
     }
 
     /**
-     * Ğ´Èë´ğ°¸ÎÄ¼ş£¨UTF-8£©
+     * å†™å…¥ç­”æ¡ˆæ–‡ä»¶ï¼ˆUTF-8ï¼‰
      */
     static void writeFile(String path, String content) throws IOException {
         Path p = Paths.get(path);

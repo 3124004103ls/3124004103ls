@@ -29,6 +29,17 @@
     <build>
         <finalName>main</finalName>
         <plugins>
+            <!-- 编译插件，强制 UTF-8 编码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
             <!-- 打包成可执行 jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
