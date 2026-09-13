@@ -9,7 +9,7 @@ import java.util.List;
  * - 分词（中文按字 + bigram，英文按单词）
  */
 public class TextProcessor {
-    
+
     private TextProcessor() {
        // 工具类，禁止实例化
     }
@@ -17,7 +17,7 @@ public class TextProcessor {
     /**
      * 预处理文本，返回分词后的 token 列表
      */
-    public static List<String> tokenize(String text) {
+        public static List<String> tokenize(String text) {
         List<String> tokens = new ArrayList<>();
         if (text == null || text.isEmpty()) {
             return tokens;
@@ -36,18 +36,16 @@ public class TextProcessor {
             return tokens;
         }
 
-        // 2. 按字符切分，再生成 bigram
-        List<String> chars = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
-            chars.add(String.valueOf(s.charAt(i)));
+        int len = s.length();
+
+        // 2. unigram
+        for (int i = 0; i < len; i++) {
+            tokens.add(s.substring(i, i + 1));
         }
 
-        // unigram
-        tokens.addAll(chars);
-
-        // bigram
-        for (int i = 0; i + 1 < chars.size(); i++) {
-            tokens.add(chars.get(i) + chars.get(i + 1));
+        // 3. bigram
+        for (int i = 0; i + 1 < len; i++) {
+            tokens.add(s.substring(i, i + 2));
         }
 
         return tokens;
