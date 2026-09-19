@@ -14,12 +14,8 @@ import java.util.List;
 public class FileIO {
 
     private FileIO() {
-        // 工具类，禁止实例化
     }
 
-    /**
-     * 读取所有行
-     */
     public static List<String> readLines(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         if (!Files.exists(path)) {
@@ -28,17 +24,11 @@ public class FileIO {
         return Files.readAllLines(path, StandardCharsets.UTF_8);
     }
 
-    /**
-     * 写入所有行
-     */
     public static void writeLines(String filePath, List<String> lines) throws IOException {
         Path path = Paths.get(filePath);
         Files.write(path, lines, StandardCharsets.UTF_8);
     }
 
-    /**
-     * 生成 Exercises.txt 和 Answers.txt 的内容
-     */
     public static List<String> buildExerciseLines(List<Expression> expressions) {
         List<String> lines = new ArrayList<>();
         for (int i = 0; i < expressions.size(); i++) {

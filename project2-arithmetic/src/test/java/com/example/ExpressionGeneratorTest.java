@@ -2,6 +2,9 @@ package com.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -19,7 +22,7 @@ class ExpressionGeneratorTest {
     @Test
     void testGenerateNoRepeat() {
         ExpressionGenerator generator = new ExpressionGenerator(10);
-        java.util.Set<String> seen = new java.util.HashSet<>();
+        Set<String> seen = new HashSet<>();
         for (int i = 0; i < 20; i++) {
             Expression expr = generator.generate();
             String key = ExpressionNormalizer.normalize(expr);

@@ -2,20 +2,15 @@ package com.example;
 
 /**
  * 表达式解析器：把字符串形式的四则运算表达式解析成表达式树
- * 支持：+ - × ÷、括号、分数、带分数
  */
 public class ExpressionParser {
 
     private ExpressionParser() {
-        // 工具类，禁止实例化
     }
 
     private static String input;
     private static int pos;
 
-    /**
-     * 解析表达式
-     */
     public static Expression parse(String expr) {
         input = expr.replace(" ", "");
         pos = 0;
@@ -26,9 +21,6 @@ public class ExpressionParser {
         return result;
     }
 
-    /**
-     * 加减法（最低优先级）
-     */
     private static Expression parseExpression() {
         Expression left = parseTerm();
         while (pos < input.length()) {
@@ -45,17 +37,14 @@ public class ExpressionParser {
         return left;
     }
 
-    /**
-     * 乘除法（较高优先级）
-     */
     private static Expression parseTerm() {
         Expression left = parseFactor();
         while (pos < input.length()) {
             char c = input.charAt(pos);
-            if (c == '×' || c == '÷'|| c == '*' || c == '/') {
+            if (c == '*' || c == '/') {
                 pos++;
                 Expression right = parseFactor();
-                Expression.Type type = (c == '×'|| c == '*') ? Expression.Type.MULTIPLY : Expression.Type.DIVIDE;
+                Expression.Type type = (c == '*') ? Expression.Type.MULTIPLY : Expression.Type.DIVIDE;
                 left = new Expression(type, left, right);
             } else {
                 break;
@@ -64,9 +53,6 @@ public class ExpressionParser {
         return left;
     }
 
-    /**
-     * 因子：数字、括号表达式
-     */
     private static Expression parseFactor() {
         if (pos >= input.length()) {
             throw new IllegalArgumentException("表达式不完整");
@@ -84,10 +70,7 @@ public class ExpressionParser {
         return new Expression(parseNumber());
     }
 
-    /**
-     * 解析数字：支持 "3", "3/5", "2'3/8"
-     */
-        private static Fraction parseNumber() {
+    private static Fraction parseNumber() {
         int start = pos;
         boolean hasSlash = false;
         while (pos < input.length()) {

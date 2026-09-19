@@ -24,7 +24,6 @@ public class Main {
         }
 
         try {
-            // 判分模式
             if (contains(args, "-e") && contains(args, "-a")) {
                 String exerciseFile = getArgValue(args, "-e");
                 String answerFile = getArgValue(args, "-a");
@@ -32,7 +31,6 @@ public class Main {
                 return;
             }
 
-            // 生成模式
             if (!contains(args, "-n")) {
                 LOGGER.severe("缺少 -n 参数");
                 printUsage();
@@ -46,14 +44,10 @@ public class Main {
 
         } catch (Exception e) {
             LOGGER.severe("程序异常: " + e.getMessage());
-            e.printStackTrace();
             System.exit(2);
         }
     }
 
-    /**
-     * 生成题目和答案
-     */
     private static void generate(int n, int r) throws IOException {
         ExpressionGenerator generator = new ExpressionGenerator(r);
         List<Expression> expressions = new ArrayList<>();
@@ -67,14 +61,11 @@ public class Main {
         FileIO.writeLines("Exercises.txt", exerciseLines);
         FileIO.writeLines("Answers.txt", answerLines);
 
-        LOGGER.info("已生成 " + n + " 道题目，范围 0-" + (r - 1));
+        LOGGER.info(() -> "已生成 " + n + " 道题目，范围 0-" + (r - 1));
         LOGGER.info("题目文件: Exercises.txt");
         LOGGER.info("答案文件: Answers.txt");
     }
 
-    /**
-     * 判分
-     */
     private static void grade(String exerciseFile, String answerFile) throws IOException {
         List<String> exerciseLines = FileIO.readLines(exerciseFile);
         List<String> answerLines = FileIO.readLines(answerFile);
@@ -85,9 +76,6 @@ public class Main {
         LOGGER.info("判分完成，结果已写入 Grade.txt");
     }
 
-    /**
-     * 判断参数是否存在
-     */
     private static boolean contains(String[] args, String key) {
         for (String arg : args) {
             if (arg.equals(key)) return true;
@@ -95,9 +83,6 @@ public class Main {
         return false;
     }
 
-    /**
-     * 获取参数的值，如 -n 10 返回 "10"
-     */
     private static String getArgValue(String[] args, String key) {
         for (int i = 0; i < args.length - 1; i++) {
             if (args[i].equals(key)) {
@@ -107,17 +92,13 @@ public class Main {
         throw new IllegalArgumentException("参数 " + key + " 缺少值");
     }
 
-    /**
-     * 打印用法
-     */
     private static void printUsage() {
-        System.out.println("用法:");
-        System.out.println("  生成题目: java -jar main.jar -n <数量> [-r <范围>]");
-        System.out.println("  判分:     java -jar main.jar -e <题目文件> -a <答案文件>");
-        System.out.println();
-        System.out.println("示例:");
-        System.out.println("  java -jar main.jar -n 10");
-        System.out.println("  java -jar main.jar -n 10 -r 20");
-        System.out.println("  java -jar main.jar -e Exercises.txt -a Answers.txt");
+        LOGGER.info("用法:");
+        LOGGER.info("  生成题目: java -jar main.jar -n <数量> [-r <范围>]");
+        LOGGER.info("  判分:     java -jar main.jar -e <题目文件> -a <答案文件>");
+        LOGGER.info("示例:");
+        LOGGER.info("  java -jar main.jar -n 10");
+        LOGGER.info("  java -jar main.jar -n 10 -r 20");
+        LOGGER.info("  java -jar main.jar -e Exercises.txt -a Answers.txt");
     }
 }

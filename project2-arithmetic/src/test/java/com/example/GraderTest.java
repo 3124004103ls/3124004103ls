@@ -35,7 +35,7 @@ class GraderTest {
         );
         List<String> answers = Arrays.asList(
                 "1. 1/2 + 1/3 = 5/6",
-                "2. 3/4 - 1/4 = 1/3"  // 错误答案
+                "2. 3/4 - 1/4 = 1/3"
         );
         List<String> result = Grader.grade(exercises, answers);
         assertEquals("Correct: 1 (1)", result.get(0));

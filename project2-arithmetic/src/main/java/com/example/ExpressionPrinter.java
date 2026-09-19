@@ -6,19 +6,12 @@ package com.example;
 public class ExpressionPrinter {
 
     private ExpressionPrinter() {
-        // 工具类，禁止实例化
     }
 
-    /**
-     * 打印表达式（顶层不加多余括号）
-     */
     public static String print(Expression expr) {
         return print(expr, 0);
     }
 
-    /**
-     * 递归打印，parentPrecedence 表示父节点的优先级
-     */
     private static String print(Expression expr, int parentPrecedence) {
         if (expr.isNumber()) {
             return expr.getValue().toString();
@@ -28,26 +21,14 @@ public class ExpressionPrinter {
         String left = print(expr.getLeft(), currentPrecedence);
         String right = print(expr.getRight(), currentPrecedence + 1);
 
-        String op;
-        switch (expr.getType()) {
-          case ADD: op = "+"; break;
-          case SUBTRACT: op = "-"; break;
-          case MULTIPLY: op = "*"; break;
-          case DIVIDE: op = "/"; break;
-          default: op = "?"; break;
-        }
-        String result = left + " " + op + " " + right;
+        String result = left + " " + expr.getOperatorSymbol() + " " + right;
 
-        // 如果当前优先级低于父节点，需要加括号
         if (currentPrecedence < parentPrecedence) {
             return "(" + result + ")";
         }
         return result;
     }
 
-    /**
-     * 运算符优先级
-     */
     private static int precedence(Expression.Type type) {
         switch (type) {
             case ADD:

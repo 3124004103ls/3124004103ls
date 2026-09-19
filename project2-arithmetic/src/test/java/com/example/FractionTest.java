@@ -13,32 +13,28 @@ class FractionTest {
     void testAdd() {
         Fraction a = new Fraction(1, 6);
         Fraction b = new Fraction(1, 8);
-        Fraction result = a.add(b);
-        assertEquals(new Fraction(7, 24), result);
+        assertEquals(new Fraction(7, 24), a.add(b));
     }
 
     @Test
     void testSubtract() {
         Fraction a = new Fraction(3, 4);
         Fraction b = new Fraction(1, 4);
-        Fraction result = a.subtract(b);
-        assertEquals(new Fraction(1, 2), result);
+        assertEquals(new Fraction(1, 2), a.subtract(b));
     }
 
     @Test
     void testMultiply() {
         Fraction a = new Fraction(2, 3);
         Fraction b = new Fraction(3, 4);
-        Fraction result = a.multiply(b);
-        assertEquals(new Fraction(1, 2), result);
+        assertEquals(new Fraction(1, 2), a.multiply(b));
     }
 
     @Test
     void testDivide() {
         Fraction a = new Fraction(1, 2);
         Fraction b = new Fraction(1, 4);
-        Fraction result = a.divide(b);
-        assertEquals(new Fraction(2), result);
+        assertEquals(new Fraction(2), a.divide(b));
     }
 
     @Test
