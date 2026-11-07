@@ -16,16 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class WebApp {
 
-    // 将 Agent 定义为静态变量，保证 Spring Boot 启动时加载一次，全局可用
     private static WeatherAgent agent;
 
-    // 复用之前的接口定义
     interface WeatherAgent {
         String chat(String userMessage);
     }
 
     public static void main(String[] args) {
-        // 1. 初始化大模型
         String apiKey = System.getenv("DASHSCOPE_API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
             System.err.println("错误：未找到环境变量 DASHSCOPE_API_KEY！");
@@ -38,19 +35,17 @@ public class WebApp {
                 .modelName("qwen-max")
                 .build();
 
-        // 2. 构建 Agent
+        // 构建 Agent，注册天气工具和待办工具
         agent = AiServices.builder(WeatherAgent.class)
                 .chatLanguageModel(model)
-                .tools(new WeatherTool())
+                .tools(new WeatherTool(), new TaskTool()) 
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
-                .systemMessageProvider(memoryId -> "你是一个专业的智能出行助手。当用户询问某地天气时，请调用工具获取数据，并根据温度、降水等给出合理的穿衣和出行建议。")
+                .systemMessageProvider(memoryId -> "你是一个专业的智能出行与校园管家。你可以调用天气工具查天气，也可以调用待办工具帮用户记录和管理任务。请友好地回答用户。")
                 .build();
 
-        // 3. 启动 Spring Boot Web 服务
         SpringApplication.run(WebApp.class, args);
     }
 
-    // 接收前端发来的对话请求
     @GetMapping("/chat")
     public String chat(@RequestParam String message) {
         return agent.chat(message);
