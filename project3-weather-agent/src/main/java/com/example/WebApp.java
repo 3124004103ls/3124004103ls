@@ -40,7 +40,7 @@ public class WebApp {
                 .chatLanguageModel(model)
                 .tools(new WeatherTool(), new TaskTool()) 
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
-                .systemMessageProvider(memoryId -> "你是一个专业的智能出行与校园管家。你可以调用天气工具查天气，也可以调用待办工具帮用户记录和管理任务。请友好地回答用户。")
+                .systemMessageProvider(memoryId -> "你是一个专业的智能出行与校园管家。你可以调用天气工具查天气，也可以调用待办工具添加、查看、删除用户的待办事项。删除时，请让用户提供完整的待办内容再进行调用。")
                 .build();
 
         SpringApplication.run(WebApp.class, args);

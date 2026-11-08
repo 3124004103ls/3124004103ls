@@ -46,4 +46,25 @@ public class TaskTool {
             return "❌ 读取待办失败：" + e.getMessage();
         }
     }
+        // 工具 3：删除特定内容的待办
+    @Tool("根据待办事项的具体内容删除该条待办。输入参数为要删除的待办事项的完整文字内容")
+    public String deleteTask(String taskContent) {
+        try {
+            Path path = Paths.get(FILE_PATH);
+            if (!Files.exists(path)) {
+                return "❌ 当前没有待办事项，无法删除。";
+            }
+            List<String> tasks = Files.readAllLines(path, StandardCharsets.UTF_8);
+            boolean removed = tasks.removeIf(t -> t.contains(taskContent) || taskContent.contains(t));
+            
+            if (removed) {
+                Files.write(path, tasks, StandardCharsets.UTF_8);
+                return "✅ 成功删除了包含该内容的待办事项：" + taskContent;
+            } else {
+                return "❌ 未找到包含该内容的待办事项，请检查输入。";
+            }
+        } catch (IOException e) {
+            return "❌ 删除待办失败：" + e.getMessage();
+        }
+    }
 }
